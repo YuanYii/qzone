@@ -11,5 +11,12 @@
 
     <artifactId>qz05_provider_message</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>top.yuanyii</groupId>
+            <artifactId>qz00_pojo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

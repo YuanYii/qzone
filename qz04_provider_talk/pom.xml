@@ -11,5 +11,13 @@
 
     <artifactId>qz04_provider_talk</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>top.yuanyii</groupId>
+            <artifactId>qz00_pojo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
