@@ -5,7 +5,6 @@ import top.yuanyii.commons.ResultObj;
 import top.yuanyii.sms.httpclient.HTTPException;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * @Author 闫佳兴
@@ -13,22 +12,21 @@ import java.util.Arrays;
  * @Description
  */
 public class SendSms {
-    public static ResultObj send(String code, String[] phoneNumber){
+    /**
+     * 短信发送方法
+     * @param code 具体的验证码，4-6位纯数字
+     * @param phoneNumber 要发送的手机号(标准的11位手机号，不用手机号前+86)
+     * @return
+     */
+    public static ResultObj send(String code, String phoneNumber){
         // 短信应用SDK AppID
         int appid = 1400292122;
-
         // 短信应用SDK AppKey
         String appkey = "a315c820d5443afe26a7e0720ba554ee";
-
         // 需要发送短信的手机号码
-        String[] phoneNumbers = phoneNumber;
-
-        // 短信模板ID，需要在短信应用中申请
-        // NOTE: 这里的模板ID`7839`只是一个示例，
+        String[] phoneNumbers = {phoneNumber};
         // 真实的模板ID需要在短信控制台中申请
         int templateId = 490008;
-
-        // 签名
         // 签名参数使用的是`签名内容`，而不是`签名ID`
         String smsSign = "ronins";
         // 指定模板ID单发短信
@@ -36,9 +34,10 @@ public class SendSms {
             String codes = code;
             String[] params = {codes};
             SmsMultiSender msender = new SmsMultiSender(appid, appkey);
+            // 签名参数未提供或者为空时，会使用默认签名发送短信
             SmsMultiSenderResult result =  msender.sendWithParam("86", phoneNumbers,
-                    templateId, params, smsSign, "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
-            System.out.print(result);
+                    templateId, params, smsSign, "", "");
+            System.out.println(result);
             return new ResultObj().SEND_SUCCESS;
         } catch (HTTPException e) {
             // HTTP响应码错误

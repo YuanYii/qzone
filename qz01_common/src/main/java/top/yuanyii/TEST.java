@@ -12,9 +12,13 @@ import top.yuanyii.sms.SendSms;
 public class TEST {
     public static void main(String[] args) {
         String code = RandomUtil.randomNumbers(6);
-        String p = "15686903006";
-        String[] phone = {p};
+        System.out.println(code);
+        /**
+         * 任可   15229059863
+         * 闫佳兴 15686903006
+         */
+        String phone = "15686903006";
         ResultObj send = SendSms.send(code, phone);
-        System.out.println(send.getMsg());
+        System.out.println(send.toString());
     }
 }
