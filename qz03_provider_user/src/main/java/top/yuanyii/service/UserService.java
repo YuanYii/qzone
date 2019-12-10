@@ -13,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 
+import cn.hutool.core.util.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import top.yuanyii.dao.UserDao;
 import top.yuanyii.pojo.user.User;
-import top.yuanyii.util.IdWorker;
 
 /**
  * 服务层
@@ -36,8 +36,6 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 	
-	@Resource
-	private IdWorker idWorker;
 
 	/**
 	 * 查询全部列表
@@ -86,7 +84,7 @@ public class UserService {
 	 * @param user
 	 */
 	public void add(User user) {
-		user.setUid( idWorker.nextId()+"" );
+		user.setUid(IdUtil.simpleUUID()+"" );
 		userDao.save(user);
 	}
 

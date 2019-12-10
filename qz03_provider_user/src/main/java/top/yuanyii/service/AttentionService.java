@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import cn.hutool.core.util.IdUtil;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import top.yuanyii.dao.AttentionDao;
 import top.yuanyii.pojo.user.Attention;
-import top.yuanyii.util.IdWorker;
 
 
 /**
@@ -32,9 +32,6 @@ public class AttentionService {
 
 	@Autowired
 	private AttentionDao attentionDao;
-	
-	@Resource
-	private IdWorker idWorker;
 
 	/**
 	 * 查询全部列表
@@ -83,9 +80,11 @@ public class AttentionService {
 	 * @param attention
 	 */
 	public void add(Attention attention) {
-		attention.setAttentionid( idWorker.nextId()+"" );
+		attention.setAttentionid(IdUtil.simpleUUID()+"" );
 		attentionDao.save(attention);
 	}
+
+
 
 	/**
 	 * 修改

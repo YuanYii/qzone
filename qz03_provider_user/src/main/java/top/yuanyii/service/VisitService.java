@@ -13,6 +13,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 
+import cn.hutool.core.util.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import top.yuanyii.dao.VisitDao;
 import top.yuanyii.pojo.user.Visit;
-import top.yuanyii.util.IdWorker;
 /**
  * 服务层
  * 
@@ -35,8 +35,7 @@ public class VisitService {
 	@Autowired
 	private VisitDao visitDao;
 	
-	@Resource
-	private IdWorker idWorker;
+
 
 	/**
 	 * 查询全部列表
@@ -85,7 +84,7 @@ public class VisitService {
 	 * @param visit
 	 */
 	public void add(Visit visit) {
-		visit.setVid( idWorker.nextId()+"" );
+		visit.setVid(IdUtil.simpleUUID()+"" );
 		visitDao.save(visit);
 	}
 

@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import cn.hutool.core.util.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import top.yuanyii.dao.FriendDao;
 import top.yuanyii.pojo.user.Friend;
-import top.yuanyii.util.IdWorker;
 
 
 /**
@@ -33,8 +33,6 @@ public class FriendService {
 	@Autowired
 	private FriendDao friendDao;
 	
-	@Resource
-	private IdWorker idWorker;
 
 	/**
 	 * 查询全部列表
@@ -83,7 +81,7 @@ public class FriendService {
 	 * @param friend
 	 */
 	public void add(Friend friend) {
-		friend.setFriendid( idWorker.nextId()+"" );
+		friend.setFriendid( IdUtil.simpleUUID()+"" );
 		friendDao.save(friend);
 	}
 
