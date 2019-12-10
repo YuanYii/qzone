@@ -1,7 +1,9 @@
 package top.yuanyii.sms;
 
+import jdk.net.SocketFlow;
 import org.json.JSONException;
-import top.yuanyii.commons.ResultObj;
+import top.yuanyii.entity.Result;
+import top.yuanyii.entity.StatusCode;
 import top.yuanyii.sms.httpclient.HTTPException;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class SendSms {
      * @param phoneNumber 要发送的手机号(标准的11位手机号，不用手机号前+86)
      * @return
      */
-    public static ResultObj send(String code, String phoneNumber){
+    public static Result send(String code, String phoneNumber){
         // 短信应用SDK AppID
         int appid = 1400292122;
         // 短信应用SDK AppKey
@@ -38,19 +40,19 @@ public class SendSms {
             SmsMultiSenderResult result =  msender.sendWithParam("86", phoneNumbers,
                     templateId, params, smsSign, "", "");
             System.out.println(result);
-            return new ResultObj().SEND_SUCCESS;
+            return new Result(true, StatusCode.OK,"发送成功");
         } catch (HTTPException e) {
             // HTTP响应码错误
             e.printStackTrace();
-            return new ResultObj().SEND_ERROR;
+            return new Result(false, StatusCode.ERROR,"发送失败");
         } catch (JSONException e) {
             // json解析错误
             e.printStackTrace();
-            return new ResultObj().SEND_ERROR;
+            return new Result(false, StatusCode.ERROR,"发送失败");
         } catch (IOException e) {
             // 网络IO错误
             e.printStackTrace();
-            return new ResultObj().SEND_ERROR;
+            return new Result(false, StatusCode.ERROR,"发送失败");
         }
     }
 }

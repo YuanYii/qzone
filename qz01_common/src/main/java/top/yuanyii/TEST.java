@@ -1,7 +1,7 @@
 package top.yuanyii;
 
 import cn.hutool.core.util.RandomUtil;
-import top.yuanyii.commons.ResultObj;
+import top.yuanyii.entity.Result;
 import top.yuanyii.sms.SendSms;
 
 /**
@@ -18,7 +18,7 @@ public class TEST {
          * 闫佳兴 15686903006
          */
         String phone = "15686903006";
-        ResultObj send = SendSms.send(code, phone);
+        Result send = SendSms.send(code, phone);
         System.out.println(send.toString());
     }
 }
