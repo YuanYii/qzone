@@ -1,0 +1,19 @@
+server:
+  port: 11022
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: je1907
+    password: 1234
+    url: jdbc:mysql://47.95.5.18:3306/qzone_talk?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: qz04-provider-talk
+eureka:
+  instance:
+    prefer-ip-address: true
+
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:11100/eureka
