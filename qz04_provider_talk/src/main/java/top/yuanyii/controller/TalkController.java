@@ -3,12 +3,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import top.yuanyii.entity.PageResult;
 import top.yuanyii.entity.Result;
 import top.yuanyii.entity.StatusCode;
@@ -20,8 +16,8 @@ import top.yuanyii.service.TalkService;
  * @author Administrator
  *
  */
-@RestController
-@CrossOrigin
+@Controller
+//@CrossOrigin
 @RequestMapping("/talk")
 public class TalkController {
 
@@ -33,8 +29,10 @@ public class TalkController {
 	 * 查询全部数据
 	 * @return
 	 */
-	@RequestMapping(method= RequestMethod.GET)
+	@RequestMapping("/all")
+    @ResponseBody
 	public Result findAll(){
+
 		return new Result(true, StatusCode.OK,"查询成功",talkService.findAll());
 	}
 	
