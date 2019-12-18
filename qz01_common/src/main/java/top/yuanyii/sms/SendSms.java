@@ -20,7 +20,7 @@ public class SendSms {
      * @param phoneNumber 要发送的手机号(标准的11位手机号，不用手机号前+86)
      * @return
      */
-    public static Result send(String code, String phoneNumber){
+    public static Result send(Integer code, String phoneNumber){
         // 短信应用SDK AppID
         int appid = 1400292122;
         // 短信应用SDK AppKey
@@ -33,8 +33,8 @@ public class SendSms {
         String smsSign = "ronins";
         // 指定模板ID单发短信
         try {
-            String codes = code;
-            String[] params = {codes};
+            ;
+            String[] params = {code.toString()};
             SmsMultiSender msender = new SmsMultiSender(appid, appkey);
             // 签名参数未提供或者为空时，会使用默认签名发送短信
             SmsMultiSenderResult result =  msender.sendWithParam("86", phoneNumbers,

@@ -1,9 +1,6 @@
 package top.yuanyii.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -14,6 +11,7 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import top.yuanyii.dao.UserDao;
 import top.yuanyii.pojo.user.User;
+import top.yuanyii.sms.SendSms;
 
 /**
  * 服务层
@@ -57,6 +56,19 @@ public class UserService {
 		Specification<User> specification = createSpecification(whereMap);
 		PageRequest pageRequest =  PageRequest.of(page-1, size);
 		return userDao.findAll(specification, pageRequest);
+	}
+
+	/**
+	 * 发送短信
+	 * @param phone
+	 * @return
+	 */
+	public Map<String,Integer> getCode(String phone){
+		Integer code = RandomUtil.randomInt(6);
+		SendSms.send(code,phone);
+		Map<String,Integer> codeMap = new HashMap<>();
+		codeMap.put(phone,code);
+		return codeMap;
 	}
 
 	

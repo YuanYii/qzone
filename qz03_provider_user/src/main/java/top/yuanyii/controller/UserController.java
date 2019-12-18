@@ -4,6 +4,7 @@ import	java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.hutool.core.util.RandomUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import top.yuanyii.entity.Result;
 import top.yuanyii.entity.StatusCode;
 import top.yuanyii.pojo.user.User;
 import top.yuanyii.service.UserService;
+import top.yuanyii.sms.SendSms;
 
 /**
  * 控制器层
@@ -22,6 +24,9 @@ import top.yuanyii.service.UserService;
 @CrossOrigin
 @RequestMapping("/user")
 public class UserController {
+
+    public static Map<String, Integer> newCode = new HashMap<> ();
+
 
     @Autowired
     private UserService userService;
@@ -86,10 +91,25 @@ public class UserController {
      * @param user
      */
     @RequestMapping(method = RequestMethod.POST)
-    public Result add(@RequestBody User user) {
-        userService.add(user);
-        return new Result(true, StatusCode.OK, "增加成功");
+    public Result add(@RequestBody User user,@RequestParam Integer code) {
+
+        if (code == null){
+            return new Result(false, StatusCode.ERROR, "请输入短信验证码");
+        }else if (!code.equals(newCode.get(user.getUphone())) ){
+            return new Result(false, StatusCode.ERROR, "验证码不正确");
+        }else {
+            userService.add(user);
+            return new Result(true, StatusCode.OK, "增加成功");
+        }
     }
+
+
+    @RequestMapping(value = "code" , method = RequestMethod.POST)
+    public Result code(@RequestBody User user){
+        newCode = userService.getCode(user.getUphone());
+        return new Result(true,StatusCode.OK,"发送短信成功");
+    }
+
 
     /**
      * 修改
